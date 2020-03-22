@@ -1,0 +1,80 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Employes - Procost{% endblock %}
+
+{% block content %}
+    <main class="app-content">
+        <div class="app-title">
+            <div>
+                <h1><i class="fa fa-users"></i> Edition d'un employe</h1>
+            </div>
+            <ul class="app-breadcrumb breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('main_homepage') }}"><i class="fa fa-home fa-lg"></i></a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('employe_liste', {'page': 1}) }}">Employe</a>
+                </li>
+                <li class="breadcrumb-item">Edition d'un employe</li>
+            </ul>
+        </div>
+
+        {% for flash_type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ flash_type }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+    {% if (app.user.roles[0] != 'ROLE_EMPLOYE') %}
+        <div class="tile">
+            {{ form_start(form) }}
+                <section>
+                    <h3>Informations générales</h3>
+                    <div class="row mt-4">
+                        <div class="offset-md-4 col-md-8">
+
+                            <div class="form-group row">
+                                {{ form_label(form.nom, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici le nom du projet' } }) }}
+                                {{ form_errors(form.nom) }}
+                            </div>
+                            <div class="form-group row">
+                                {{ form_label(form.description, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                {{ form_widget(form.description, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici la description du projet' } }) }}
+                                {{ form_errors(form.description) }}
+                            </div>
+                            <div class="form-group row">
+                                {{ form_label(form.prix, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                {{ form_widget(form.prix, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici le prix de vente du projet' } }) }}
+                                {{ form_errors(form.prix) }}
+                            </div>
+                            <div class="form-group row">
+                                {{ form_label(form.date_creation, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                {{ form_widget(form.date_creation, {'attr': {'class': 'form-control col-md-9' } }) }}
+                                {{ form_errors(form.date_creation) }}
+                            </div>
+                            <div class="form-group row">
+                                {{ form_label(form.date_livraison, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                {{ form_widget(form.date_livraison, {'attr': {'class': 'form-control col-md-9' } }) }}
+                                {{ form_errors(form.date_livraison) }}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <hr/>
+                <div class="row">
+                    <div class="offset-md-6 col-md-6">
+                        <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
+        </div>
+
+    {% else %}
+        <div class="tile text-center"> Vous ne diposez pas des droits nécessaires pour visualiser le contenu de cette page.</div>
+    {% endif %}
+    </main>
+{% endblock %}
+

@@ -1,0 +1,160 @@
+{% extends 'layout.html.twig' %}
+{% block javascripts  %}
+    {{ parent() }}
+    <script>
+        var ratioData = [{{ nombres.nbRentable }}, {{ nombres.nonRentable }}];
+        var deliveredData = [{{ nombres.projetsLivres }}, {{ nombres.projetsEncours }}];
+    </script>
+    <script src="{{ asset('js/dashboard.js') }}" rel="stylesheet"></script>
+
+{% endblock %}
+
+{%  block content %}
+    <main class="app-content">
+        <div class="app-title">
+            <div>
+                <h1><i class="fa fa-dashboard"></i>&nbsp;Tableau de bord </h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="widget-small info coloured-icon">
+                            <i class="icon fa fa-spinner fa-3x" aria-hidden="true"></i>
+                            <div class="info">
+                                <p class="text-muted text-sm text-uppercase">Projets en cours</p>
+                                <p><strong>{{ nombres.projetsEncours }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="widget-small warning coloured-icon">
+                            <i class="icon fa fa-check-square-o fa-3x" aria-hidden="true"></i>
+                            <div class="info">
+                                <p class="text-muted text-sm text-uppercase">Projets livrés</p>
+                                <p><strong>{{ nombres.projetsLivres }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="widget-small primary coloured-icon">
+                            <i class="icon fa fa-users fa-3x"></i>
+                            <div class="info">
+                                <p class="text-muted text-sm text-uppercase">Employés</p>
+                                <p><strong>{{ nombres.nbemployes }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="widget-small danger coloured-icon">
+                            <i class="icon fa fa-calendar-check-o fa-3x" aria-hidden="true"></i>
+                            <div class="info">
+                                <p class="text-muted text-sm text-uppercase">Heures de production</p>
+                                <p><strong>{{ nombres.heuresProduction }}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-uppercase">
+                            <div class="card-header text-center">Rentabilité</div>
+                            <div class="card-body">
+                                <p class="text-muted">
+                                    <i class="fa fa-database mr-2 text-primary"></i> {{ nombres.tauxRentabilite|number_format(2, '.', ' ')  }} % RENTABLE
+                                </p>
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <canvas id="ratio-chart" class="embed-responsive-item"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-uppercase">
+                            <div class="card-header text-center">Taux de livraison</div>
+                            <div class="card-body">
+                                <p class="text-muted">
+                                    <i class="fa fa fa-check-square-o mr-2 text-primary"></i> {{ nombres.tauxLivraison|number_format(2, '.', ' ')  }} % Livrés
+                                </p>
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <canvas id="delivered-chart" class="embed-responsive-item"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header text-center text-uppercase">Top employé</div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <img src="{{ asset('img/ui-zac.jpg') }}" class="rounded-circle" width="58">
+                                    <p class="mt-2">
+                                        <strong>{{ bestEmploye.prenom|capitalize }} {{ bestEmploye.nom|capitalize }} <br> {{ bestEmploye.metier }}</strong>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <label class="small mt">EMBAUCHÉ EN</label>
+                                        <span>{{ bestEmploye.dateEmbauche|date('M Y') }}</span>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <label class="small mt">COÛT TOTAL</label>
+                                        <span>{{ bestEmploye.cout_total }} €</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="tile table-responsive">
+                    <h2 class="tile-title">Les derniers projets</h2>
+                    <table class="table table-hover table-striped table-sm">
+                        <thead>
+                        <tr>
+                            <th>Projet</th>
+                            <th>Date de création</th>
+                            <th>Prix de vente</th>
+                            <th>Coût</th>
+                            <th>Est livré</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for projet in derniersProjets %}
+                        <tr>
+                            <th>
+                                <a href="{{ path('projet_detail', {'id': projet.id, 'page' : 1}) }}">{{ projet.nom }}</a>
+                            </th>
+                            <th>{{ projet.dateCreation|date("d/m/Y")}}</th>
+                            <th>{{ projet.prix|number_format(0, '.', ' ') }} €</th>
+                            <th>{{ projet.cout_total|number_format(0, '.', ' ') }} €</th>
+                            <th>
+                             {% if  projet.dateLivraison is null %}
+                                <span class="badge badge-danger">NON</span>
+                            {% else %}
+                                <span class="badge badge-success">OUI</span>
+                            {% endif %}
+                            </th>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="tile">
+                    <h2 class="tile-title text-center">Temps de production</h2>
+                    <ul class="list-group">
+                        {% for data in derniersTpsProduction %}
+                            <li class="list-group-item">
+                                <a href="{{ path('employe_detail', {'id': data.employe.id, 'page' : 1}) }}">{{ data.employe.prenom|capitalize }} {{ data.employe.nom|capitalize }}</a> a travaillé sur <a href="{{ path('projet_detail', {'id': data.projet.id, 'page' : 1}) }}">{{ data.projet.nom }}</a>
+                                <div class="text-muted font-italic text-right">{{ data.heuresTravailles }} heures</div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

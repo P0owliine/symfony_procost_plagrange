@@ -1,0 +1,96 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Employes - Procost{% endblock %}
+
+    {% block content %}
+        <main class="app-content">
+            <div class="app-title">
+                <div>
+                    <h1><i class="fa fa-users"></i>&nbsp;Edition d'un employe</h1>
+                </div>
+                <ul class="app-breadcrumb breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('main_homepage') }}"><i class="fa fa-home fa-lg"></i></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ path('employe_liste', {'page': 1}) }}">Employe</a>
+                    </li>
+                    <li class="breadcrumb-item">Edition d'un employe</li>
+                </ul>
+            </div>
+
+            {% for flash_type, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ flash_type }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            {% if ((app.user.roles[0] == 'ROLE_EMPLOYE') and (app.user.id == id)) or ((app.user.roles[0] == 'ROLE_MANAGER') and (id ==0)) %}
+            <div class="tile">
+                {{ form_start(form) }}
+                    <section>
+                        <h3>Informations générales</h3>
+                        <div class="row mt-4">
+                            <div class="offset-md-4 col-md-8">
+                                <div class="form-group row">
+                                    {{ form_label(form.prenom, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.prenom, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici le prénom de l\'employé' } }) }}
+                                    {{ form_errors(form.prenom) }}
+                                </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.nom, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.nom, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici le nom de l\'employé' } }) }}
+                                    {{ form_errors(form.nom) }}
+                                </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.email, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici l\'email de l\'employé' } }) }}
+                                    {{ form_errors(form.email) }}
+                                </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.password, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.password, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici le mot de passe'} }) }}
+                                    {{ form_errors(form.password) }}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <hr/>
+                    <section>
+                        <h3>Production</h3>
+                        <div class="row mt-4">
+                            <div class="offset-md-4 col-md-8">
+                                <div class="form-group row">
+                                    {{ form_label(form.metier, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.metier, {'attr': {'class': 'form-control col-md-9'} }) }}
+                                    {{ form_errors(form.metier) }}
+                                </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.coutHoraire, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.coutHoraire, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Ecrivez ici le coût horaire de l\'employé' } }) }}
+                                    {{ form_errors(form.coutHoraire) }}
+                                </div>
+                                <div class="form-group row">
+                                    {{ form_label(form.dateEmbauche, null, {'label_attr': {'class': 'control-label col-md-3'} }) }}
+                                    {{ form_widget(form.dateEmbauche, {'attr': {'class': 'form-control col-md-9', 'placeholder': 'Insérez ici la date d\'embauche de l\'employé' } }) }}
+                                    {{ form_errors(form.dateEmbauche) }}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <hr/>
+                    <div class="row">
+                        <div class="offset-md-6 col-md-6">
+                            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i>Enregistrer</button>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+            </div>
+            {% else %}
+                <div class="tile text-center"> Vous ne diposez pas des droits nécessaires pour visualiser le contenu de cette page.</div>
+            {% endif %}
+        </main>
+
+    {% endblock %}
