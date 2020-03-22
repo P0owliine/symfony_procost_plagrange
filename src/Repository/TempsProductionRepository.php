@@ -75,7 +75,7 @@ class TempsProductionRepository extends ServiceEntityRepository
     public function bestEmploye()
     {
         return $this->createQueryBuilder('t')
-            ->select('e.prenom as prenom, e.nom as nom, e.dateEmbauche as dateEmbauche, m.nom as metier, t.heuresTravailles as heuresTravailles, MAX(e.coutHoraire * t.heuresTravailles) as cout_total')
+            ->select('e.prenom as prenom, e.nom as nom, e.img as img, e.dateEmbauche as dateEmbauche, m.nom as metier, t.heuresTravailles as heuresTravailles, MAX(e.coutHoraire * t.heuresTravailles) as cout_total')
             ->leftJoin('t.employe', 'e')
             ->leftJoin('e.metier', 'm')
             ->getQuery()

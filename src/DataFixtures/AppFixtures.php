@@ -40,7 +40,7 @@ class AppFixtures extends Fixture
         $prenom = ['paul', 'pauline', 'thomas', 'theo', 'jordan', 'diego', 'lucas', 'héli', 'holly', 'julie', 'katy', 'betty'];
         $nom = ['handerson', 'lagrange', 'lagarde', 'fusaro', 'hermann', 'guerriero', 'hernandez', 'schester', 'dory', 'hoking', 'times', 'ugly'];
         $pwd = ['paulo', 'popo', 'toto', 'teo', 'jojo', 'diego', 'luka', 'eli', 'oly', 'july', 'katy', 'betty'];
-
+        $img = ['paul.png', 'pauline.png', 'thomas.png', 'theo.png', 'jordan.png', 'diego.png', 'lucas.png', 'heli.png', 'holly.png', 'julie.png', 'katy.png', 'betty.png'];
         for ($i = 1; $i <= 12; $i++) {
             $employe = new Employe();
             $password = $this->encoder->encodePassword($employe, $pwd[$i - 1]);
@@ -60,6 +60,7 @@ class AppFixtures extends Fixture
                 ->setPassword($password)
                 ->setPrenom($prenom[$i - 1])
                 ->setNom($nom[$i - 1])
+                ->setImg($img[$i - 1])
                 ->setCoutHoraire(rand(10, 100))
                 ->setDateEmbauche(new \DateTime('2019/' . random_int(1, 12) . '/' . random_int(1, 31)));
 
@@ -128,7 +129,7 @@ class AppFixtures extends Fixture
 
             $tpsProduction = (new TempsProduction())
                 ->setProjet($this->getReference('projet' . random_int(1, 11)))
-                ->setEmploye($this->getReference('employe' . random_int(2, 12)))
+                ->setEmploye($this->getReference('employe' . random_int(3, 12)))
                 ->setHeuresTravailles(random_int(5, 35));
                 if($date < new \DateTime()){
                     $tpsProduction ->setDateSaisie(new \DateTime());
@@ -142,7 +143,7 @@ class AppFixtures extends Fixture
             $date = new \DateTime('2019/' . random_int(1, 12) . '/' . random_int(1, 31));
             $tpsProduction = (new TempsProduction())
                 ->setProjet($this->getReference('projet' . random_int(11, 15)))
-                ->setEmploye($this->getReference('employe' . random_int(2, 12)))
+                ->setEmploye($this->getReference('employe' . random_int(3, 12)))
                 ->setHeuresTravailles(random_int(5, 35));
                 if($date < new \DateTime()){
                     $tpsProduction ->setDateSaisie(new \DateTime());

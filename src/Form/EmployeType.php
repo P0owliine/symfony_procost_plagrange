@@ -20,6 +20,10 @@ class EmployeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('img', TextType::class, [
+                'label' => 'Image',
+                'required' => false,
+            ])
             ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
                 'required' => true,

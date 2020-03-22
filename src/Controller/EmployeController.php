@@ -8,6 +8,7 @@ use App\Entity\TempsProduction;
 use App\Form\EmployeType;
 use App\Form\TempsType;
 use App\Repository\EmployeRepository;
+use App\Repository\MetierRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +29,14 @@ class EmployeController extends AbstractController
     /** @var EmployeRepository */
     private $employeRepository;
 
-    public function __construct(EntityManagerInterface $em, EmployeRepository $employeRepository)
+    /** @var MetierRepository */
+    private $metierRepository;
+
+    public function __construct(EntityManagerInterface $em, EmployeRepository $employeRepository, MetierRepository $metierRepository)
     {
         $this->em = $em;
         $this->employeRepository = $employeRepository;
+        $this->metierRepository = $metierRepository;
     }
 
 
@@ -82,6 +87,7 @@ class EmployeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->getData()->getPassword();
             $form->getData()->setPassword(password_hash($password, PASSWORD_DEFAULT));
+
             $this->em->persist($employe);
             $this->em->flush();
             if ($id != 0){

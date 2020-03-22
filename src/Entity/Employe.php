@@ -66,6 +66,11 @@ class Employe implements UserInterface
      */
     private $tempsProductions;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $img;
+
     public function __construct()
     {
         $this->tempsProductions = new ArrayCollection();
@@ -237,6 +242,18 @@ class Employe implements UserInterface
                 $tempsProduction->setEmploye(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImg(): ?string
+    {
+        return $this->img;
+    }
+
+    public function setImg(?string $img): self
+    {
+        $this->img = $img;
 
         return $this;
     }

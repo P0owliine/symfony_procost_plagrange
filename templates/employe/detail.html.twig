@@ -31,6 +31,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="tile">
+                         <div class="text-center"><img src="{{ asset("img/#{employe.img}") }}" class="rounded-circle " width="100"></div><br>
+
                         <table class="table table-striped table-bordered table-sm">
                             <tbody>
                                 <tr>
@@ -66,6 +68,7 @@
                         {% else %}
                         {%  endif %}
                     </div>
+                    {% if(id > 2) %}
                     <div class="tile">
                         <h3 class="title-title mb-4">Ajouter un temps</h3>
                         {{ form_start(form) }}
@@ -87,6 +90,8 @@
                             </div>
                         {{form_end(form)}}
                     </div>
+                    {% else %}
+                    {% endif %}
                 </div>
                 <div class="col-md-8">
                     <div class="tile pb-5">
