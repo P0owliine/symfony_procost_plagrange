@@ -4,9 +4,12 @@ namespace App\Form;
 
 use App\Entity\Employe;
 use App\Entity\Metier;
+use Doctrine\ORM\EntityRepository;
 use phpDocumentor\Reflection\Type;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -39,7 +42,11 @@ class EmployeType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('metier', EntityType::class, [
                 'class' => Metier::class,
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('m')
+                        ->where('m.id != 1');
+                }
             ])
             ->add('coutHoraire', NumberType::class, [
                 'label' => 'Coût horaire',

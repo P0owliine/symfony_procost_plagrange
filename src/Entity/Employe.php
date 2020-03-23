@@ -257,4 +257,5 @@ class Employe implements UserInterface
 
         return $this;
     }
+
 }

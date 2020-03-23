@@ -79,7 +79,6 @@ class EmployeController extends AbstractController
             }
         }else{
             $employe = new Employe();
-            $employe->setRoles(['ROLE_EMPLOYE']);
         }
 
         $form = $this->createForm(EmployeType::class, $employe);
@@ -87,9 +86,9 @@ class EmployeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->getData()->getPassword();
             $form->getData()->setPassword(password_hash($password, PASSWORD_DEFAULT));
-
             $this->em->persist($employe);
             $this->em->flush();
+
             if ($id != 0){
                 $this->addFlash('success', 'L\'employé a été modifié avec succès');
                 $page = 1;
