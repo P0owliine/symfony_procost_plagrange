@@ -1,11 +1,21 @@
-Lagrange Pauline LP Web
+PROJET DE COURS - INTRODUCTION A SYMFONY - MARS 2020
+-> Travail autonome
 
-lagrange.pauline@hotmail.fr
+DESCRIPTION DU PROJET
+-> http://sf.florianhermann.fr/projets/procost.html
 
-Je suis pas sur d'avoir tout bien compris au sujet, comme par exemple si les managers peuvent travailler sur un projet, s'ils font parties de la liste des employes et du coup si l'on peut en ajouter. J'ai concidéré que non, que c'était simplement des gestionnaires du site.
-Mais je me suis peut-être trompé sur d'autres points aussi.. j'ai fais comme j'ai pu et comme je l'ai compris :)
+LANCEMENT DU PROJET
+	composer install
+	php bin/console d:d:c
+	php bin/console d:s:u --dump-sql
+	php bin/console d:s:u --force
+	php bin/console d:f:l
 
-Bonne continuation à vous.
+Si : The requested URL was not found on this server.
+-> composer require symfony/apache-pack
 
-Cordialement, 
-Lagrange Pauline.
+INFORMATIONS
+-> SERVER WAMP
+-> PHP 7.4.3
+-> SYMFONY 5.0.5
+
