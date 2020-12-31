@@ -14,6 +14,10 @@
 Si : The requested URL was not found on this server.  
 -> composer require symfony/apache-pack
 
+#### INDENTIFICATION/CONNEXION
+-> lagrange.pauline@gmail.com (popo)  
+-> autres voir fixtures
+
 #### INFORMATIONS
 -> SERVER WAMP  
 -> PHP 7.4.3  
